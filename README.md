@@ -18,10 +18,20 @@
 
 
 
-# Spesifikasi:
+# Spesifikasi
 
 -masksimum 32x32 pixel
 
 -font lobster
 
 -warna putih(r:255,g:255,b:255,a:255)
+
+# How to
+
+-cukup compile gambar.c
+
+-Jalankan dalam console linux(masuk dengan ctrl+alt+f1, keluar dengan alt+f7).
+
+-gunakan {sudo ./[nama executable]} untuk menjalankan.
+
+-informasi tambahan dapat dicari dari https://github.com/riochr17/framebuffer-test
