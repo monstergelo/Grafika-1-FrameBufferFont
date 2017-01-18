@@ -1,8 +1,11 @@
 # Grafika-1-FrameBufferFont
 
-Pembagian Tugas
+
+
+# Pembagian Tugas
 
 -Verisky: V,I,N
+
 -Diaz:    S,H,T
 
 -Kelvin:  L,O,[spasi]
@@ -14,7 +17,8 @@ Pembagian Tugas
 -Evita:   A,B,M
 
 
-Spesifikasi:
+
+# Spesifikasi:
 
 -masksimum 32x32 pixel
 
