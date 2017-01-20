@@ -20,6 +20,8 @@
 
 # Spesifikasi
 
+-input(x,y) untuk titik kiri atas
+
 -Huruf Kapital saja
 
 -masksimum 32x32 pixel
@@ -36,4 +38,4 @@
 
 -gunakan {sudo ./[nama executable]} untuk menjalankan.
 
--informasi tambahan dapat dicari dari https://github.com/riochr17/framebuffer-test
+-informasi tambahan dapat dicari dari https://github.com/riochr17/framebuffer-test, https://www.freetype.org/freetype2/docs/tutorial/example1.c
