@@ -20,6 +20,8 @@
 
 # Spesifikasi
 
+-Huruf Kapital saja
+
 -masksimum 32x32 pixel
 
 -font lobster
