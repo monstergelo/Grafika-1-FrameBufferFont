@@ -315,16 +315,16 @@ void draw_huruf_L(int x, int y) {
 
 	int i, j;
     
-    for(i = 0; i < 32; i++) {
-        for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
-        }
+	for(i = 0; i < 32; i++) {
+		for(j = 0; j < 32; j++) {
+			color c = {
+				floor(61 * (255 - m[i][j]) / 255),
+				floor(70 * (255 - m[i][j]) / 255),
+				floor(255 * (255 - m[i][j]) / 255),
+				255
+			};
+			draw_dot(x + j, y + i, &c);
+		}
 	}
 }
 
@@ -368,17 +368,17 @@ void draw_spasi(int x, int y) {
 	};
 	
 	int i, j;
-    
-    for(i = 0; i < 32; i++) {
-        for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
-        }
+
+	for(i = 0; i < 32; i++) {
+		for(j = 0; j < 32; j++) {
+			color c = {
+				floor(61 * (255 - m[i][j]) / 255),
+				floor(70 * (255 - m[i][j]) / 255),
+				floor(255 * (255 - m[i][j]) / 255),
+				255
+			};
+			draw_dot(x + j, y + i, &c);
+		}
 	}
 }
 
@@ -422,16 +422,16 @@ void draw_huruf_O(int x, int y) {
 	};
 	
 	int i, j;
-    
-    for(i = 0; i < 32; i++) {
-        for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
-        }
+
+	for(i = 0; i < 32; i++) {
+		for(j = 0; j < 32; j++) {
+			color c = {
+				floor(61 * (255 - m[i][j]) / 255),
+				floor(70 * (255 - m[i][j]) / 255),
+				floor(255 * (255 - m[i][j]) / 255),
+				255
+			};
+			draw_dot(x + j, y + i, &c);
+		}
 	}
 }
