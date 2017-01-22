@@ -21,6 +21,10 @@ void draw_dot(int x, int y, color* c);
 void draw_huruf_E(int x, int y);
 void draw_huruf_K(int x, int y);
 void draw_huruf_Y(int x, int y);
+void draw_huruf_Z(int x, int y);
+void draw_huruf_R(int x, int y);
+void draw_huruf_D(int x, int y);
+
 
 int main()
 {
