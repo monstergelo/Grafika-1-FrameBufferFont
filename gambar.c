@@ -46,6 +46,7 @@ void draw_huruf_P(int x, int y);
 void draw_huruf_dua(int x0, int y0);
 void draw_kata(int* x, int* y, char* c);
 void draw_huruf(int x, int y, char c);
+void refresh(int x0, int x1, int y0, int y1);
 
 int main()
 {
@@ -79,6 +80,7 @@ int main()
     }
 
 //=======================================================================================
+    clear_screen(1366, 700);
     int x = 25;
     int y0 = 700;
     int y = 700;
@@ -87,7 +89,7 @@ int main()
 
     while(y0 > -300){
     	y = y0;
-    	clear_screen(1366, 700);
+    	refresh(0, 340, y, y+300);
 	    draw_kata(&x, &y,"kelompok 2");
 	    y += 32;
 
@@ -126,6 +128,31 @@ void clear_screen(int width, int height)
             *(fbp + position + 1) = 70;
             *(fbp + position + 2) = 61;
             *(fbp + position + 3) = 255;
+        }
+    }
+}
+
+
+void refresh(int x0, int x1, int y0, int y1)
+{
+    int x = 0;
+    int y = 0;
+
+    for(x=x0; x<x1; x++)
+    {
+        for(y=y0; y<y1; y++)
+        {
+        	if((y<0) || (y>layary)){
+				
+			}
+			else{
+	            long int position = (x + vinfo.xoffset) * (vinfo.bits_per_pixel / 8) + 
+	               (y + vinfo.yoffset) * finfo.line_length;
+	            *(fbp + position) = 255;
+	            *(fbp + position + 1) = 70;
+	            *(fbp + position + 2) = 61;
+	            *(fbp + position + 3) = 255;
+	        }
         }
     }
 }
