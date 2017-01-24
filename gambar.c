@@ -19,6 +19,10 @@ int fbfd = 0; //pointer framebuffer driver
 int layarx = 1366;
 int layary = 700;
 
+unsigned char buffer_r[1366][700];
+unsigned char buffer_g[1366][700];
+unsigned char buffer_b[1366][700];
+
 void clear_screen(int width, int height);
 void draw_dot(int x, int y, color* c);
 void draw_huruf_E(int x, int y);
@@ -84,12 +88,20 @@ int main()
     int x = 25;
     int y0 = 700;
     int y = 700;
-    int cepetnaik = 10;
+    int cepetnaik = 2;
+    int endPoint = -500;
 
 
-    while(y0 > -300){
+	color bg = {
+        61,
+        70,
+        255,
+        255
+    };
+
+    while(y0 > endPoint){
     	y = y0;
-    	refresh(0, 340, y, y+300);
+    	refresh(0, 360, 0, 700);
 	    draw_kata(&x, &y,"kelompok 2");
 	    y += 32;
 
@@ -101,8 +113,24 @@ int main()
 	    draw_kata(&x, &y,"Evita");
 	    draw_kata(&x, &y,"Kelvin");
 
+		int p, q;
+		for(p = 0; p < layarx; p++)
+			for(q= 0; q < layary; q++){
+				color c = {
+	                floor(61 * (255 - buffer_r[p][q]) / 255),
+	                floor(70 * (255 - buffer_g[p][q]) / 255),
+	                floor(255 * (255 - buffer_b[p][q]) / 255),
+	                255
+	            };
+
+	            if(buffer_r[p][q] == 0)
+	            	c = bg;
+
+	            draw_dot(p, q, &c);
+			}
+
 	    y0 -= cepetnaik;
-	    usleep(100000);
+	    usleep(10000);
     }
 
     munmap(fbp, screensize);
@@ -146,12 +174,9 @@ void refresh(int x0, int x1, int y0, int y1)
 				
 			}
 			else{
-	            long int position = (x + vinfo.xoffset) * (vinfo.bits_per_pixel / 8) + 
-	               (y + vinfo.yoffset) * finfo.line_length;
-	            *(fbp + position) = 255;
-	            *(fbp + position + 1) = 70;
-	            *(fbp + position + 2) = 61;
-	            *(fbp + position + 3) = 255;
+	        	buffer_r[x][y] = 0;
+	        	buffer_g[x][y] = 0;
+	        	buffer_b[x][y] = 0;
 	        }
         }
     }
@@ -209,7 +234,7 @@ void draw_kata(int* x, int* y, char* kata){
 	int xx = *x;
 	int yy = *y;
 	int icrx = 32;
-	int icry = 32;
+	int icry = 40;
 	char curr = ' ';
 	int i = 0;
 
@@ -265,13 +290,11 @@ void draw_huruf_E(int x, int y){
     int i, j;
     for(i = 0; i < 32; i++)
         for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
         }
 }
 
@@ -316,13 +339,11 @@ void draw_huruf_K(int x, int y){
     int i, j;
     for(i = 0; i < 32; i++)
         for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
         }
 }
 
@@ -367,13 +388,12 @@ void draw_huruf_Y(int x, int y){
     int i, j;
     for(i = 0; i < 32; i++)
         for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
+            
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
         }
 }
 
@@ -419,13 +439,12 @@ void draw_huruf_D(int x, int y){
 	int i, j;
     for(i = 0; i < 32; i++)
         for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
+            
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
         }
 }
 
@@ -470,16 +489,15 @@ void draw_huruf_I(int x, int y){
     int i, j;
     for(i = 0; i < 32; i++)
         for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
+            
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
         }
 }
-
+ 
 void draw_huruf_V(int x, int y){
 
     unsigned char m[32][32] = {
@@ -521,13 +539,12 @@ void draw_huruf_V(int x, int y){
     int i, j;
     for(i = 0; i < 32; i++)
         for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
+            
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
         }
 }
 
@@ -574,13 +591,12 @@ void draw_huruf_Z(int x, int y){
 	int i, j;
     for(i = 0; i < 32; i++)
         for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
+            
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
         }
 }
 
@@ -625,13 +641,12 @@ void draw_huruf_N(int x, int y){
     int i, j;
     for(i = 0; i < 32; i++)
         for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
+            
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
         }
 }
 
@@ -676,13 +691,12 @@ void draw_huruf_A(int x, int y){
     int i, j;
     for(i = 0; i < 32; i++)
         for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
+            
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
         }
 }
 
@@ -729,13 +743,12 @@ void draw_huruf_R(int x, int y){
 	int i, j;
     for(i = 0; i < 32; i++)
         for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
+            
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
         }
 }
 
@@ -782,13 +795,12 @@ void draw_huruf_B(int x, int y){
     int i, j;
     for(i = 0; i < 32; i++)
         for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
+            
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
         }
 }
 
@@ -833,13 +845,12 @@ void draw_huruf_M(int x, int y){
     int i, j;
     for(i = 0; i < 32; i++)
         for(j = 0; j < 32; j++){
-            color c = {
-                floor(61 * (255 - m[i][j]) / 255),
-                floor(70 * (255 - m[i][j]) / 255),
-                floor(255 * (255 - m[i][j]) / 255),
-                255
-            };
-            draw_dot(x + j, y + i, &c);
+            
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
         }
 }
 
@@ -886,13 +897,11 @@ void draw_huruf_L(int x, int y) {
     
 	for(i = 0; i < 32; i++) {
 		for(j = 0; j < 32; j++) {
-			color c = {
-				floor(61 * (255 - m[i][j]) / 255),
-				floor(70 * (255 - m[i][j]) / 255),
-				floor(255 * (255 - m[i][j]) / 255),
-				255
-			};
-			draw_dot(x + j, y + i, &c);
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
 		}
 	}
 }
@@ -940,13 +949,11 @@ void draw_spasi(int x, int y) {
 
 	for(i = 0; i < 32; i++) {
 		for(j = 0; j < 32; j++) {
-			color c = {
-				floor(61 * (255 - m[i][j]) / 255),
-				floor(70 * (255 - m[i][j]) / 255),
-				floor(255 * (255 - m[i][j]) / 255),
-				255
-			};
-			draw_dot(x + j, y + i, &c);
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
 		}
 	}
 }
@@ -994,13 +1001,11 @@ void draw_huruf_O(int x, int y) {
 
 	for(i = 0; i < 32; i++) {
 		for(j = 0; j < 32; j++) {
-			color c = {
-				floor(61 * (255 - m[i][j]) / 255),
-				floor(70 * (255 - m[i][j]) / 255),
-				floor(255 * (255 - m[i][j]) / 255),
-				255
-			};
-			draw_dot(x + j, y + i, &c);
+        	if(y+i < layary && y+i > 0){
+	        	buffer_r[x + j][y + i] = m[i][j];
+	        	buffer_g[x + j][y + i] = m[i][j];
+	        	buffer_b[x + j][y + i] = m[i][j];
+        	}
 		}
 	}
 }
@@ -1048,10 +1053,11 @@ void draw_huruf_H(int x0, int y0) {
 			
 	for (i = 0; i < 32; i++) {
 		for (j = 0; j < 32; j++) {
-			if (a[i][j] != 0) {
-				what.a = a[j][i];
-				draw_dot(x0+j, y0+i, &what);
-			}
+if(y0+i < layary && y0+i > 0){
+        	buffer_r[x0 + j][y0 + i] = a[i][j];
+        	buffer_g[x0 + j][y0 + i] = a[i][j];
+        	buffer_b[x0 + j][y0 + i] = a[i][j];
+        	}
 		}
 	}
 }
@@ -1099,10 +1105,11 @@ void draw_huruf_T(int x0, int y0) {
 			
 	for (i = 0; i < 32; i++) {
 		for (j = 0; j < 32; j++) {
-			if (a[i][j] != 0) {
-				what.a = a[j][i];
-				draw_dot(x0+j, y0+i, &what);
-			}
+if(y0+i < layary && y0+i > 0){
+        	buffer_r[x0 + j][y0 + i] = a[i][j];
+        	buffer_g[x0 + j][y0 + i] = a[i][j];
+        	buffer_b[x0 + j][y0 + i] = a[i][j];
+        	}
 		}
 	}
 }
@@ -1151,10 +1158,11 @@ void draw_huruf_S(int x0, int y0) {
 			
 	for (i = 0; i < 32; i++) {
 		for (j = 0; j < 32; j++) {
-			if (a[i][j] != 0) {
-				what.a = a[j][i];
-				draw_dot(x0+j, y0+i, &what);
-			}
+if(y0+i < layary && y0+i > 0){
+        	buffer_r[x0 + j][y0 + i] = a[i][j];
+        	buffer_g[x0 + j][y0 + i] = a[i][j];
+        	buffer_b[x0 + j][y0 + i] = a[i][j];
+        	}
 		}
 	}
 }
@@ -1203,10 +1211,11 @@ void draw_huruf_P(int x0, int y0) {
 			
 	for (i = 0; i < 32; i++) {
 		for (j = 0; j < 32; j++) {
-			if (a[i][j] != 0) {
-				what.a = a[j][i];
-				draw_dot(x0+j, y0+i, &what);
-			}
+if(y0+i < layary && y0+i > 0){
+        	buffer_r[x0 + j][y0 + i] = a[i][j];
+        	buffer_g[x0 + j][y0 + i] = a[i][j];
+        	buffer_b[x0 + j][y0 + i] = a[i][j];
+        	}
 		}
 	}
 }
@@ -1255,10 +1264,11 @@ void draw_huruf_dua(int x0, int y0) {
 			
 	for (i = 0; i < 32; i++) {
 		for (j = 0; j < 32; j++) {
-			if (a[i][j] != 0) {
-				what.a = a[j][i];
-				draw_dot(x0+j, y0+i, &what);
-			}
+if(y0+i < layary && y0+i > 0){
+        	buffer_r[x0 + j][y0 + i] = a[i][j];
+        	buffer_g[x0 + j][y0 + i] = a[i][j];
+        	buffer_b[x0 + j][y0 + i] = a[i][j];
+        	}
 		}
 	}
 }
